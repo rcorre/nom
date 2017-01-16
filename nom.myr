@@ -1,0 +1,6 @@
+use std
+const main = {
+	for x in [(1, "let's"), (2, "get"), (3, "started")]
+		std.put("{}\n", x)
+	;;
+}
