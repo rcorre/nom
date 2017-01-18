@@ -1,6 +1,27 @@
 use std
-const main = {
-	for x in [(1, "let's"), (2, "get"), (3, "started")]
-		std.put("{}\n", x)
+
+const main = {args
+	var cmd = std.optparse(args, &[
+		.argdesc = "[inputs...]",
+		.opts = [
+			[.opt='v', .desc="version"],
+		][:]
+	])
+
+	var version = false
+
+	for opt in cmd.opts
+		match opt
+		| ('v', ""):    version = true
+		| _:    		std.die("unreachable\n")
+		;;
+	;;
+
+	if (version)
+		std.put("version")
+	;;
+
+	if (cmd.args.len == 0)
+		std.fatal("Must provide a command\n");
 	;;
 }
