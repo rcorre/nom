@@ -1,0 +1,42 @@
+use std
+
+pkg food =
+	type food = struct
+		cal : int
+		fat : int
+		carbs : int
+		protein : int
+	;;
+
+	const parsefood : (s : byte[:] -> food)
+;;
+
+const parsefood = {s
+	var f
+	var lines = std.strsplit(s, "\n")
+	for line in lines
+		var idx
+		match std.strfind(line, ":")
+		| `std.Some i: idx = i
+		| `std.None: std.fatal("Failed to parse line {}", line)
+		;;
+
+		var key = line[:idx]
+		var strval = line[idx:]
+		std.fput(std.stderr, "{} {} {}", key, strval, idx)
+		var val
+		match std.intparse(strval)
+		| `std.Some v: val = v
+		| `std.None: std.fatal("Failed to parse value {}" , strval)
+		;;
+
+		match key
+		| "cal": 		f.cal = val
+		| "fat": 		f.fat = val
+		| "carbs": 		f.carbs = val
+		| "protein": 	f.protein = val
+		| _: 			std.fatal("Unkown key {}", key)
+		;;
+	;;
+	-> f
+}

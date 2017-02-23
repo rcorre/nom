@@ -1,0 +1,7 @@
+use std
+use "food"
+
+const main = {
+	var f = food.parsefood("name: Banana\ncal: 5")
+	std.assert(f.cal == 5, "calories incorrect")
+}
